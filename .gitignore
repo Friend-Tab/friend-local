@@ -1,0 +1,18 @@
+build/
+dist/
+*.o
+*.a
+*.friend
+*.blob
+*.friendlocal
+friends/
+
+# Real exports. A friend file is somebody's conversations; this repo is
+# going to be public.
+friend_*.zip
+friend_state.json
+
+# Keys.
+.env
+settings.json
+friend_*.zip.json

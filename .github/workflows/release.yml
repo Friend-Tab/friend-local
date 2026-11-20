@@ -1,0 +1,309 @@
+# Releases: a tag v* builds Linux, macOS and the one-file web version,
+# publishes them as a GitHub release, and puts the web version up on
+# GitHub Pages for phones. Run by hand (workflow_dispatch), it builds and checks both and
+# keeps the packages as artifacts, without releasing anything.
+#
+# SDL3 is built from source at the commit below and linked in statically,
+# so what comes out needs nothing installed to run.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SDL_REPO: libsdl-org/SDL
+  SDL_REF: fa2c02bb6e21974a89ea9824bc53c9932abe5f9c # release-3.4.16
+
+jobs:
+  linux:
+    # The oldest supported Ubuntu, so the binary asks for an old glibc and
+    # runs on any distribution from 2022 on.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SDL_REPO }}
+          ref: ${{ env.SDL_REF }}
+          path: sdl
+
+      - name: Version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then v="${GITHUB_REF_NAME#v}"
+          else v="0.0.0-dev.${GITHUB_SHA::7}"; fi
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: What SDL3 builds against
+        # Headers only: SDL opens X11, Wayland and the audio servers at run
+        # time, so none of these are needed by whoever runs the result.
+        # A mirror that stops answering hangs apt forever (it once sat for
+        # the full six hours), so every download has a timeout and the whole
+        # install is tried a few times.
+        timeout-minutes: 20
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          apt="sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30"
+          for try in 1 2 3; do
+            timeout 300 $apt update && timeout 600 $apt install -y --no-install-recommends \
+            cmake ninja-build pkg-config zip xvfb imagemagick clang lld \
+            libasound2-dev libpulse-dev libpipewire-0.3-dev \
+            libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxfixes-dev libxi-dev libxss-dev libxtst-dev \
+            libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev \
+            libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev \
+            libibus-1.0-dev libudev-dev libwayland-dev \
+            wayland-protocols libdecor-0-dev && break
+            [ "$try" = 3 ] && exit 1
+            echo "apt failed, trying again"; sleep 20
+          done
+
+      - name: SDL3, static
+        # Built inside its own tree: on a tag, SDL stamps its revision into
+        # a generated header, which must be under its source folder.
+        run: |
+          cmake -S sdl -B sdl/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TESTS=OFF \
+            -DSDL_EXAMPLES=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -DCMAKE_INSTALL_PREFIX="$HOME/sdl3"
+          cmake --build sdl/build
+          cmake --install sdl/build
+
+      # The web version's checks drive a browser over a websocket, which
+      # node has built in from 22.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Tests
+        run: ./build.sh test && ./build.sh platform && ./build.sh web-test
+
+      - name: Package
+        run: |
+          export PKG_CONFIG_PATH="$HOME/sdl3/lib/pkgconfig:$HOME/sdl3/lib64/pkgconfig"
+          export SDL_CFLAGS="$(pkg-config --cflags sdl3)"
+          export SDL_LIBS="$(pkg-config --static --libs sdl3)"
+          export SDL_LICENSE="$PWD/sdl/LICENSE.txt"
+          ./build.sh dist "$VERSION"
+          # After dist, which starts dist/ afresh. The site is the page
+          # with what puts it on a phone's home screen beside it.
+          ./build.sh site "$VERSION"
+          cp build/friend-local.html "dist/friend-local-$VERSION.html"
+
+      - name: Check what came out
+        run: |
+          pkg="$PWD/dist/friend-local-$VERSION-linux-x86_64"
+          if ldd "$pkg/friend-local" | grep -i sdl; then
+            echo "SDL3 should be inside the binary"; exit 1
+          fi
+          echo "needs $(objdump -T "$pkg/friend-local" | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -1)"
+          "$pkg/friendpeek" libfriend/tests/export.json | head -5
+          # The window, from somewhere else entirely, so it can only find
+          # its own files beside itself.
+          mkdir -p /tmp/friends
+          cd /tmp
+          FRIEND_LOCAL_DIR=/tmp/friends SDL_AUDIO_DRIVER=dummy \
+            xvfb-run -a -s "-screen 0 1280x900x24" sh -c \
+              "'$pkg/friend-local' > /tmp/run.log 2>&1 & sleep 6; \
+               import -window root /tmp/linux.png; kill \$! || true"
+          cat /tmp/run.log
+          grep -q 'friends:' /tmp/run.log
+          if grep -i -E 'no icon font|no usable sans' /tmp/run.log; then exit 1; fi
+
+      - name: Check the web version in a browser
+        run: |
+          chrome="$(command -v google-chrome || command -v chromium)"
+          node frontend/web/tests/browser_check.mjs "$chrome" "dist/friend-local-$VERSION.html"
+          node frontend/web/tests/site_check.mjs "$chrome" build/site
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: friend-local-linux
+          path: |
+            dist/*.tar.gz
+            dist/*.html
+          if-no-files-found: error
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref_type == 'tag'
+        with:
+          path: build/site
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshot-linux
+          path: /tmp/linux.png
+          if-no-files-found: ignore
+
+  macos:
+    # Apple Silicon, building for Intel too: one binary with both.
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SDL_REPO }}
+          ref: ${{ env.SDL_REF }}
+          path: sdl
+
+      - name: Version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then v="${GITHUB_REF_NAME#v}"
+          else v="0.0.0-dev.$(echo "$GITHUB_SHA" | cut -c1-7)"; fi
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: pkg-config
+        run: command -v pkg-config || brew install pkgconf
+
+      - name: SDL3, static, both architectures
+        run: |
+          cmake -S sdl -B sdl/build -DCMAKE_BUILD_TYPE=Release \
+            -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TESTS=OFF \
+            -DSDL_EXAMPLES=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+            -DCMAKE_INSTALL_PREFIX="$HOME/sdl3"
+          cmake --build sdl/build -j 4
+          cmake --install sdl/build
+
+      - name: Tests
+        run: ./build.sh test && ./build.sh platform
+
+      - name: Package
+        run: |
+          export PKG_CONFIG_PATH="$HOME/sdl3/lib/pkgconfig"
+          export SDL_CFLAGS="$(pkg-config --cflags sdl3)"
+          export SDL_LIBS="$(pkg-config --static --libs sdl3)"
+          export SDL_LICENSE="$PWD/sdl/LICENSE.txt"
+          ./build.sh dist "$VERSION"
+
+      - name: Check what came out
+        run: |
+          pkg="$PWD/dist/friend-local-$VERSION-macos"
+          app="$pkg/friend-local.app"
+          lipo -info "$app/Contents/MacOS/friend-local"
+          lipo -info "$pkg/friendchat"
+          if otool -L "$app/Contents/MacOS/friend-local" | grep -i sdl; then
+            echo "SDL3 should be inside the binary"; exit 1
+          fi
+          codesign --verify --deep --strict "$app"
+          "$pkg/friendpeek" libfriend/tests/export.json | head -5
+          # The Intel half, under Rosetta where the runner has it.
+          if arch -x86_64 /usr/bin/true 2>/dev/null; then
+            arch -x86_64 "$pkg/friendpeek" libfriend/tests/export.json | head -2
+          fi
+          mkdir -p /tmp/friends
+          cd /tmp
+          FRIEND_LOCAL_DIR=/tmp/friends SDL_AUDIO_DRIVER=dummy \
+            "$app/Contents/MacOS/friend-local" > /tmp/run.log 2>&1 &
+          sleep 8
+          screencapture -x /tmp/macos.png || true
+          kill $! || true
+          cat /tmp/run.log
+          grep -q 'friends:' /tmp/run.log
+          if grep -i -E 'no icon font|no usable sans' /tmp/run.log; then exit 1; fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: friend-local-macos
+          path: dist/*.zip
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshot-macos
+          path: /tmp/macos.png
+          if-no-files-found: ignore
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: [linux, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: friend-local-*
+          path: out
+          merge-multiple: true
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          sha256sum * > SHA256SUMS
+          v="${GITHUB_REF_NAME#v}"
+          cat > ../notes.md <<NOTES
+          Your friend.com friend on your own computer, with your own Gemini or
+          OpenAI key. Nothing goes anywhere except the requests to the
+          provider you choose.
+
+          ### Linux (x86_64)
+
+          Download \`friend-local-$v-linux-x86_64.tar.gz\`, unpack it, and run
+          \`./friend-local\` inside. It needs a desktop with X11 or Wayland and
+          a distribution from 2022 or later (Ubuntu 22.04, Debian 12,
+          Fedora 36 or newer).
+
+          ### macOS 11 or later (Apple Silicon and Intel)
+
+          Download \`friend-local-$v-macos.zip\` and open it. The app is not
+          notarized by Apple, so the first time you open it, macOS will
+          refuse; open it once, then go to **System Settings › Privacy &
+          Security** and click **Open Anyway**. (In Terminal, \`xattr -dr
+          com.apple.quarantine friend-local.app\` does the same.)
+
+          ### In a browser, including Windows
+
+          Download \`friend-local-$v.html\` and open it: the whole thing in
+          one file. Friends are kept in that
+          browser's storage on that device, so download them now and then
+          (the button beside each one) to keep a copy. Talking out loud
+          works; the realtime voice mode is only in the desktop app.
+
+          ### On a phone
+
+          Open https://friend-tab.github.io/friend-local/ and add it to your
+          home screen (Share › **Add to Home Screen** on an iPhone,
+          **Install** on Android). It opens like an app from then on, works
+          offline, and keeps your friends on the phone.
+
+          ### Then
+
+          Open **Settings**, paste your key, and click **Import a friend
+          file** to bring in the \`friend_<name>.zip\` you downloaded from
+          friend.com. To move a friend to another computer, hover over them
+          and click the download button.
+
+          The command-line tools \`friendchat\`, \`friendtalk\` and
+          \`friendpeek\` are in the same folder as the desktop app. On
+          Windows, use the web version. \`SHA256SUMS\` has the checksums.
+          NOTES
+          gh release create "$GITHUB_REF_NAME" * \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "friend-local $GITHUB_REF_NAME" \
+            --notes-file ../notes.md
+
+  pages:
+    # The web version at https://friend-tab.github.io/friend-local/, the
+    # way onto a phone: open it there once and add it to the home screen.
+    if: github.ref_type == 'tag'
+    needs: [linux, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

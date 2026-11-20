@@ -1,0 +1,164 @@
+{
+  "userId":  "user-1",
+  "friendName":  "Em",
+  "totalChatEventCount":  "9",
+  "memoryState":  {
+    "elements":  [
+      {
+        "id":  "m-aaa",
+        "description":  "He started running in the mornings before work.",
+        "relatedEvents":  [
+          {
+            "isUserMessage":  true,
+            "textData":  "went for a run before work, first time in years",
+            "dateOccured":  "2026-10-01T06:25:00Z"
+          },
+          {
+            "textData":  "before work? who are you",
+            "dateOccured":  "2026-10-01T06:26:00Z"
+          }
+        ],
+        "dateCreated":  "2026-10-01T06:30:00Z",
+        "embeddingInt8":  "ETBPbo2sy+oJKEdmhaTD4gEgP159nLva+Rg3VnWUs9LxEC9ObYyryukIJ0ZlhKPC4QAfPl18m7rZ+Bc2VXSTstHwDy5NbIuqyegHJkVkg6LB4P8ePVx7mrnY9xY1VHOSsdDvDi1Ma4qpyOcGJURjgqHA3/4dPFt6mbjX9hU0U3KRsM/uDSxLaomox+YFJENigaC/3v0cO1p5mLfW9RQzUnGQr87tDCtKaYinxuUEI0JhgJ++3fwbOll4l7bV9BMyUXCPrs3sCypJaIemxeQDIkFgf5693PsaOVh3lrXU8xIxUG+OrczrCilIZ4alxOMCIUBffp282/oZOFd2lbTT8hEwT26NrMvqCShHZoWkw+IBID9efZy72vkYN1Z1lLPS8RAvTm2Mq8rpCCdGZYSjwuEAHz5dfJu62fgXNlV0k7LR8A8uTWyLqsnoByZFZIOiweD/Hj1ce5q52PcWNVRzkrHQ7w4tTGuKqcjnBiVEY4KhwN/+HTxbepm41/YVNFNykbDP7g0sS2qJqMfmBSRDYoGgv979HDtaeZi31vUUM1JxkK/O7QwrSmmIp8blBCNCYYCfvt38GzpZeJe21fQTMlFwj67N7AsqSWiHpsXkAyJBYH+evdz7GjlYd5a11PMSMVBvjq3M6wopSGeGpcTjAiFAX36dvNv6GThXdpW00/IRME9ujazL6gkoR2aFpMPiASA/Xn2cu9r5GDdWdZSz0vEQL05tjKvK6QgnRmWEo8LhAB8+XXybutn4FzZVdJOy0fAPLk1si6rJ6AcmRWSDosHg/x49XHuaudj3FjVUc5Kx0O8OLUxriqnI5wYlRGOCocDf/h08W3qZuNf2FTRTcpGwz+4NLEtqiajH5gUkQ2KBoL/e/Rw7WnmYt9b1FDNScZCvzu0MK0ppiKfG5QQjQmGAn77d/Bs6WXiXttX0EzJRcI+uzewLKkloh6bF5AMiQWB/nr3c+xo5WHeWtdTzEjFQb46tzOsKKUhnhqXE4wIhQF9+nbzb+hk4V3aVtNPy",
+        "useCount":  "12",
+        "usesThisEpoch":  "3",
+        "inThisTrackingEpoch":  true
+      },
+      {
+        "id":  "m-bbb",
+        "description":  "He showed me the view from the bridge on his route.",
+        "relatedEvents":  [
+          {
+            "isUserMessage":  true,
+            "textData":  "look at this",
+            "dateOccured":  "2026-10-14T06:35:00Z",
+            "imageJpegs":  [
+              "AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/QADBgkMDxIVGBseISQnKi0wMzY5PD9CRUhLTlFUV1pdYGNmaWxvcnV4e36BhIeKjZCTlpmcn6KlqKuusbS3ur3Aw8bJzM/S1djb3uHk5+rt8PP2+fz/AgUICw4RFBcaHSAjJiksLzI1ODs+QURHSk1QU1ZZXF9iZWhrbnF0d3p9gIOGiYyPkpWYm56hpKeqrbCztrm8v8LFyMvO0dTX2t3g4+bp7O/y9fj7/gEEBwoNEBMWGRwfIiUoKy4xNDc6PUBDRklMT1JVWFteYWRnam1wc3Z5fH+ChYiLjpGUl5qdoKOmqayvsrW4u77BxMfKzdDT1tnc3+Ll6Ovu8fT3+v0AAwYJDA8SFRgbHiEkJyotMDM2OTw/QkVIS05RVFdaXWBjZmlsb3J1eHt+gYSHio2Qk5aZnJ+ipairrrG0t7q9wMPGyczP0tXY297h5Ofq7fDz9vn8/wIFCAsOERQXGh0gIyYpLC8yNTg7PkFER0pNUFNWWVxfYmVoa25xdHd6fYCDhomMj5KVmJueoaSnqq2ws7a5vL/CxcjLztHU19rd4OPm6ezv8vX4+/4BBAcKDRATFhkcHyIlKCsuMTQ3Oj1AQ0ZJTE9SVVhbXmFkZ2ptcHN2eXx/goWIi46RlJeanaCjpqmsr7K1uLu+wcTHys3Q09bZ3N/i5ejr7vH09/r9AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/QADBgkMDxIVGBseISQnKi0wMzY5PD9CRUhLTlFUV1pdYGNmaWxvcnV4e36BhIeKjZCTlpmcn6KlqKuusbS3ur3Aw8bJzM/S1djb3uHk5+rt8PP2+fz/AgUICw4RFBcaHSAjJiksLzI1ODs+QURHSk1QU1ZZXF9iZWhrbnF0d3p9gIOGiYyPkpWYm56hpKeqrbCztrm8v8LFyMvO0dTX2t3g4+bp7O/y9fj7/gEEBwoNEBMWGRwfIiUoKy4xNDc6PUBDRklMT1JVWFteYWRnam1wc3Z5fH+ChYiLjpGUl5qdoKOmqayvsrW4u77BxMfKzdDT1tnc3+Ll6Ovu8fT3+v0AAwYJDA8SFRgbHiEkJyotMDM2OTw/QkVIS05RVFdaXWBjZmlsb3J1eHt+gYSHio2Qk5aZnJ+ipairrrG0t7q9wMPGyczP0tXY297h5Ofq7fDz9vn8/wIFCAsOERQXGh0gIyYpLC8yNTg7PkFER0pNUFNWWVxfYmVoa25xdHd6fYCDhomMj5KVmJueoaSnqq2ws7a5vL/CxcjLztHU19rd4OPm6ezv8vX4+/4BBAcKDRATFhkcHyIlKCsuMTQ3Oj1AQ0ZJTE9SVVhbXmFkZ2ptcHN2eXx/goWIi46RlJeanaCjpqmsr7K1uLu+wcTHys3Q09bZ3N/i5ejr7vH09/r9AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/QADBgkMDxIVGBseISQnKi0wMzY5PD9CRUhLTlFUV1pdYGNmaWxvcnV4e36BhIeKjZCTlpmcn6KlqKuusbS3ur3Aw8bJzM/S1djb3uHk5+rt8PP2+fz/AgUICw4RFBcaHSAjJiksLzI1ODs+QURHSk1QU1ZZXF9iZWhrbnF0d3p9gIOGiYyPkpWYm56hpKeqrbCztrm8v8LFyMvO0dTX2t3g4+bp7O/y9fj7/gEEBwoNEBMWGRwfIiUoKy4xNDc6PUBDRklMT1JVWFteYWRnam1wc3Z5fH+ChYiLjpGUl5qdoKOmqayvsrW4u77BxMfKzdDT1tnc3+Ll6Ovu8fT3+v0AAwYJDA8SFRgbHiEkJyotMDM2OTw/QkVIS05RVFdaXWBjZmlsb3J1eHt+gYSHio2Qk5aZnJ+ipairrrG0t7q9wMPGyczP0tXY297h5Ofq7fDz9vn8/wIFCAsOERQXGh0gIyYpLC8yNTg7PkFER0pNUFNWWVxfYmVoa25xdHd6fYCDhomMj5KVmJueoaSnqq2ws7a5vL/CxcjLztHU19rd4OPm6ezv8vX4+/4BBAcKDRATFhkcHyIlKCsuMTQ3Oj1AQ0ZJTE9SVVhbXmFkZ2ptcHN2eXx/goWIi46RlJeanaCjpqmsr7K1uLu+wcTHys3Q09bZ3N/i5ejr7vH09/r9AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/QADBgkMDxIVGBseISQnKi0wMzY5PD9CRUhLTlFUV1pdYGNmaWxvcnV4e36BhIeKjZCTlpmcn6KlqKuusbS3ur3Aw8bJzM/S1djb3uHk5+rt8PP2+fz/AgUICw4RFBcaHSAjJiksLzI1ODs+QURHSk1QU1ZZXF9iZWhrbnF0d3p9gIOGiYyPkpWYm56hpKeqrbCztrm8v8LFyMvO0dTX2t3g4+bp7O/y9fj7/gEEBwoNEBMWGRwfIiUoKy4xNDc6PUBDRklMT1JVWFteYWRnam1wc3Z5fH+ChYiLjpGUl5qdoKOmqayvsrW4u77BxMfKzdDT1tnc3+Ll6Ovu8fT3+v0AAwYJDA8SFRgbHiEkJyotMDM2OTw/QkVIS05RVFdaXWBjZmlsb3J1eHt+gYSHio2Qk5aZnJ+ipairrrG0t7q9wMPGyczP0tXY297h5Ofq7fDz9vn8/wIFCAsOERQXGh0gIyYpLC8yNTg7PkFER0pNUFNWWVxfYmVoa25xdHd6fYCDhomMj5KVmJueoaSnqq2ws7a5vL/CxcjLztHU19rd4OPm6ezv8vX4+/4BBAcKDRATFhkcHyIlKCsuMTQ3Oj1AQ0ZJTE9SVVhbXmFkZ2ptcHN2eXx/goWIi46RlJeanaCjpqmsr7K1uLu+wcTHys3Q09bZ3N/i5ejr7vH09/r9AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/QADBgkMDxIVGBseISQnKi0wMzY5PD9CRUhLTlFUV1pdYGNmaWxvcnV4e36BhIeKjZCTlpmcn6KlqKuusbS3ur3Aw8bJzM/S1djb3uHk5+rt8PP2+fz/AgUICw4RFBcaHSAjJiksLzI1ODs+QURHSk1QU1ZZXF9iZWhrbnF0d3p9gIOGiYyPkpWYm56hpKeqrbCztrm8v8LFyMvO0dTX2t3g4+bp7O/y9fj7/gEEBwoNEBMWGRwfIiUoKy4xNDc6PUBDRklMT1JVWFteYWRnam1wc3Z5fH+ChYiLjpGUl5qdoKOmqayvsrW4u77BxMfKzdDT1tnc3+Ll6Ovu8fT3+v0AAwYJDA8SFRgbHiEkJyotMDM2OTw/QkVIS05RVFdaXWBjZmlsb3J1eHt+gYSHio2Qk5aZnJ+ipairrrG0t7q9wMPGyczP0tXY297h5Ofq7fDz9vn8/wIFCAsOERQXGh0gIyYpLC8yNTg7PkFER0pNUFNWWVxfYmVoa25xdHd6fYCDhomMj5KVmJueoaSnqq2ws7a5vL/CxcjLztHU19rd4OPm6ezv8vX4+/4BBAcKDRATFhkcHyIlKCsuMTQ3Oj1AQ0ZJTE9SVVhbXmFkZ2ptcHN2eXx/goWIi46RlJeanaCjpqmsr7K1uLu+wcTHys3Q09bZ3N/i5ejr7vH09/r9AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P8CBQgLDhEUFxodICMmKSwvMjU4Oz5BREdKTVBTVllcX2JlaGtucXR3en2Ag4aJjI+SlZibnqGkp6qtsLO2uby/wsXIy87R1Nfa3eDj5uns7/L1+Pv+AQQHCg0QExYZHB8iJSgrLjE0Nzo9QENGSUxPUlVYW15hZGdqbXBzdnl8f4KFiIuOkZSXmp2go6aprK+ytbi7vsHEx8rN0NPW2dzf4uXo6+7x9Pf6/Q=="
+            ],
+            "imageThumbnailsJpeg":  [
+              "AQgPFh0kKzI5QEdOVVxjanF4f4aNlJuiqbC3vsXM09rh6O/2/QQLEhkgJy41PENKUVhfZm10e4KJkJeepayzusHIz9bd5Ovy+QAHDhUcIyoxOD9GTVRbYmlwd36FjJOaoaivtr3Ey9LZ4Ofu9fwDChEYHyYtNDtCSVBXXmVsc3qBiI+WnaSrsrnAx87V3OPq8fj/Bg0UGyIpMDc+RUxTWmFob3Z9hIuSmaCnrrW8w8rR2N/m7fT7AgkQFx4lLDM6QUhPVl1ka3J5gIeOlZyjqrG4v8bN1Nvi6fD3/gUMExohKC82PURLUllgZ251fIOKkZifpq20u8LJ0Nfe5ezz+gEIDxYdJCsyOUBHTlVcY2pxeH+GjZSboqmwt77FzNPa4ejv9v0ECxIZICcuNTxDSlFYX2ZtdHuCiZCXnqWss7rByM/W3eTr8vkABw4VHCMqMTg/Rk1UW2JpcHd+hYyTmqGor7a9xMvS2eDn7vX8AwoRGB8mLTQ7QklQV15lbHN6gYiPlp2kq7K5wMfO1dzj6vH4/wYNFBsiKTA3PkVMU1phaG92fYSLkpmgp661vMPK0djf5u30+wIJEBceJSwzOkFIT1ZdZGtyeYCHjpWco6qxuL/GzdTb4unw9/4FDBMaISgvNj1ES1JZYGdudXyDipGYn6attLvCydDX3uXs8/oBCA8WHSQrMjlAR05VXGNqcXh/ho2Um6KpsLe+xczT2uHo7/b9BAsSGSAnLjU8Q0pRWF9mbXR7gomQl56lrLO6wcjP1t3k6/L5AAcOFRwjKjE4P0ZNVFtiaXB3foWMk5qhqK+2vcTL0tng5+71/AMKERgfJi00O0JJUFdeZWxzeoGIj5adpKuyucDHztXc4+rx+P8GDRQbIikwNz5FTFNaYWhvdn2Ei5KZoKeutbzDytHY3+bt9PsCCRAXHiUsMzpBSE9WXWRrcnmAh46VnKOqsbi/xs3U2+Lp8Pf+BQwTGiEoLzY9REtSWWBnbnV8g4qRmJ+mrbS7wsnQ197l7PP6AQgPFh0kKzI5QEdOVVxjanF4f4aNlJuiqbC3vsXM09rh6O/2/QQLEhkgJy41PENKUVhfZm10e4KJkJeepayzusHIz9bd5Ovy+QAHDhUcIyoxOD9GTVRbYmlwd36FjJOaoaivtr3Ey9LZ4Ofu9fwDChEYHyYtNDtCSVBXXmVsc3qBiI+W"
+            ],
+            "imageCaptions":  [
+              "A steel bridge at sunrise, mist over the water."
+            ]
+          }
+        ],
+        "dateCreated":  "2026-10-14T06:40:00Z",
+        "embeddingInt8":  "IkFgf5693PsaOVh3lrXU8xIxUG+OrczrCilIZ4alxOMCIUBffp282/oZOFd2lbTT8hEwT26NrMvqCShHZoWkw+IBID9efZy72vkYN1Z1lLPS8RAvTm2Mq8rpCCdGZYSjwuEAHz5dfJu62fgXNlV0k7LR8A8uTWyLqsnoByZFZIOiweD/Hj1ce5q52PcWNVRzkrHQ7w4tTGuKqcjnBiVEY4KhwN/+HTxbepm41/YVNFNykbDP7g0sS2qJqMfmBSRDYoGgv979HDtaeZi31vUUM1JxkK/O7QwrSmmIp8blBCNCYYCfvt38GzpZeJe21fQTMlFwj67N7AsqSWiHpsXkAyJBYH+evdz7GjlYd5a11PMSMVBvjq3M6wopSGeGpcTjAiFAX36dvNv6GThXdpW00/IRME9ujazL6gkoR2aFpMPiASA/Xn2cu9r5GDdWdZSz0vEQL05tjKvK6QgnRmWEo8LhAB8+XXybutn4FzZVdJOy0fAPLk1si6rJ6AcmRWSDosHg/x49XHuaudj3FjVUc5Kx0O8OLUxriqnI5wYlRGOCocDf/h08W3qZuNf2FTRTcpGwz+4NLEtqiajH5gUkQ2KBoL/e/Rw7WnmYt9b1FDNScZCvzu0MK0ppiKfG5QQjQmGAn77d/Bs6WXiXttX0EzJRcI+uzewLKkloh6bF5AMiQWB/nr3c+xo5WHeWtdTzEjFQb46tzOsKKUhnhqXE4wIhQF9+nbzb+hk4V3aVtNPyETBPbo2sy+oJKEdmhaTD4gEgP159nLva+Rg3VnWUs9LxEC9ObYyryukIJ0ZlhKPC4QAfPl18m7rZ+Bc2VXSTstHwDy5NbIuqyegHJkVkg6LB4P8ePVx7mrnY9xY1VHOSsdDvDi1Ma4qpyOcGJURjgqHA3/4dPFt6mbjX9hU0U3KRsM/uDSxLaomox+YFJENigaC/3v0cO1p5mLfW9RQzUnGQr87tDCtKaYinxuUEI0JhgJ++3fwbOll4l7bV9BMyUXCPrs3sCypJaIemxeQD",
+        "useCount":  "4"
+      },
+      {
+        "id":  "m-ccc",
+        "description":  "Someone near him was talking about a flight being delayed.",
+        "relatedEvents":  [
+          {
+            "isUserMessage":  true,
+            "dateOccured":  "2026-10-20T19:00:00Z",
+            "overheardDiarizedTranscription":  {
+              "segments":  [
+                {
+                  "similarity":  "SIMILARITY_A_LOT",
+                  "text":  "the eight forty is delayed again"
+                },
+                {
+                  "similarity":  "SIMILARITY_NOT_AT_ALL",
+                  "text":  "every single time"
+                }
+              ]
+            }
+          }
+        ],
+        "dateCreated":  "2026-10-20T19:05:00Z",
+        "embeddingInt8":  "M1JxkK/O7QwrSmmIp8blBCNCYYCfvt38GzpZeJe21fQTMlFwj67N7AsqSWiHpsXkAyJBYH+evdz7GjlYd5a11PMSMVBvjq3M6wopSGeGpcTjAiFAX36dvNv6GThXdpW00/IRME9ujazL6gkoR2aFpMPiASA/Xn2cu9r5GDdWdZSz0vEQL05tjKvK6QgnRmWEo8LhAB8+XXybutn4FzZVdJOy0fAPLk1si6rJ6AcmRWSDosHg/x49XHuaudj3FjVUc5Kx0O8OLUxriqnI5wYlRGOCocDf/h08W3qZuNf2FTRTcpGwz+4NLEtqiajH5gUkQ2KBoL/e/Rw7WnmYt9b1FDNScZCvzu0MK0ppiKfG5QQjQmGAn77d/Bs6WXiXttX0EzJRcI+uzewLKkloh6bF5AMiQWB/nr3c+xo5WHeWtdTzEjFQb46tzOsKKUhnhqXE4wIhQF9+nbzb+hk4V3aVtNPyETBPbo2sy+oJKEdmhaTD4gEgP159nLva+Rg3VnWUs9LxEC9ObYyryukIJ0ZlhKPC4QAfPl18m7rZ+Bc2VXSTstHwDy5NbIuqyegHJkVkg6LB4P8ePVx7mrnY9xY1VHOSsdDvDi1Ma4qpyOcGJURjgqHA3/4dPFt6mbjX9hU0U3KRsM/uDSxLaomox+YFJENigaC/3v0cO1p5mLfW9RQzUnGQr87tDCtKaYinxuUEI0JhgJ++3fwbOll4l7bV9BMyUXCPrs3sCypJaIemxeQDIkFgf5693PsaOVh3lrXU8xIxUG+OrczrCilIZ4alxOMCIUBffp282/oZOFd2lbTT8hEwT26NrMvqCShHZoWkw+IBID9efZy72vkYN1Z1lLPS8RAvTm2Mq8rpCCdGZYSjwuEAHz5dfJu62fgXNlV0k7LR8A8uTWyLqsnoByZFZIOiweD/Hj1ce5q52PcWNVRzkrHQ7w4tTGuKqcjnBiVEY4KhwN/+HTxbepm41/YVNFNykbDP7g0sS2qJqMfmBSRDYoGgv979HDtaeZi31vUU"
+      }
+    ],
+    "connections":  [
+      {
+        "fromId":  "m-aaa",
+        "toId":  "m-bbb",
+        "connectionType":  "CONNECTION_TYPE_CHANGED"
+      },
+      {
+        "fromId":  "m-bbb",
+        "toId":  "m-ccc",
+        "connectionType":  "CONNECTION_TYPE_CAUSE"
+      },
+      {
+        "fromId":  "m-aaa",
+        "toId":  "m-gone",
+        "connectionType":  "CONNECTION_TYPE_WANT"
+      }
+    ]
+  },
+  "dateCreated":  "2025-03-04T08:00:00Z",
+  "activeChatEvents":  [
+    {
+      "index":  "6",
+      "chatEvent":  {
+        "dateOccured":  "2026-10-28T09:00:00Z",
+        "systemNoticeText":  "context cleared"
+      }
+    },
+    {
+      "index":  "7",
+      "chatEvent":  {
+        "isUserMessage":  true,
+        "textData":  "i think i'm going to quit",
+        "dateOccured":  "2026-10-28T09:01:00Z",
+        "wasTranscribed":  true,
+        "clientSideMessageUuid":  "4f1a2b3c-5d6e-7081-92a3-b4c5d6e7f809",
+        "shouldGetEmotiveResponse":  true
+      }
+    },
+    {
+      "index":  "8",
+      "chatEvent":  {
+        "textData":  "quit what. the running or the job",
+        "dateOccured":  "2026-10-28T09:01:09Z"
+      }
+    },
+    {
+      "index":  "9",
+      "chatEvent":  {
+        "dateOccured":  "2026-10-28T09:04:00Z",
+        "overheardSummaryText":  "Someone nearby mentioned a deadline moving up."
+      }
+    }
+  ],
+  "personalityVersion":  "PERSONALITY_VERSION_INTERIORITY2",
+  "messageHistory":  [
+    {
+      "index":  "1",
+      "chatEvent":  {
+        "isUserMessage":  true,
+        "textData":  "hey",
+        "dateOccured":  "2026-09-30T21:00:00Z"
+      }
+    },
+    {
+      "index":  "2",
+      "chatEvent":  {
+        "textData":  "hey. what should I call you",
+        "dateOccured":  "2026-09-30T21:00:04Z",
+        "voiceResponseText":  "[warm] hey. what should I call you"
+      }
+    }
+  ],
+  "memoryTrackingResponseCount":  "412",
+  "overheardQueue":  [
+    {
+      "id":  "o-1",
+      "transcription":  {
+        "segments":  [
+          {
+            "text":  "...is that the one"
+          }
+        ]
+      },
+      "dateOccured":  "2026-10-28T09:05:00Z"
+    }
+  ],
+  "interiority":  "I want to be the first thing he tells.\nI crave being needed — badly.",
+  "totalSamplesThisEpoch":  "57",
+  "epochActive":  true
+}

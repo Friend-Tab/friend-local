@@ -1,0 +1,172 @@
+<!doctype html>
+<!-- friend-local.html — your friend.com friend in one file. Built by
+     ./build.sh web from frontend/web/; the C library is inside, as
+     WebAssembly. https://github.com/Friend-Tab/friend-local -->
+<html lang="en" data-version="@@VERSION@@">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="friend">
+<title>friend</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fae29e'/%3E%3Cstop offset='1' stop-color='%23d4b45c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3C/svg%3E">
+<style>
+@@CSS@@
+</style>
+</head>
+<body>
+<div id="app" class="app">
+  <aside id="list" class="pane list" aria-label="Friends">
+    <header class="list-head">
+      <img id="wordmark" class="wordmark" alt="friend" width="72" height="24">
+      <button id="open-settings" class="icon-button" type="button" aria-label="Settings" data-icon="gear"></button>
+    </header>
+    <div id="storage-warning" class="storage-warning" hidden></div>
+    <ul id="friends" class="friends"></ul>
+    <footer class="list-foot">
+      <button id="new-friend" class="quiet-button" type="button"><span data-icon="plus"></span>New friend</button>
+      <button id="import-friend" class="quiet-button" type="button"><span data-icon="upload"></span>Import</button>
+    </footer>
+  </aside>
+
+  <main id="chat" class="pane chat" aria-label="Conversation">
+    <header id="chat-head" class="chat-head">
+      <button id="back" class="icon-button back" type="button" aria-label="All friends" data-icon="back"></button>
+      <div class="chat-who">
+        <span id="chat-avatar" class="avatar small"></span>
+        <div class="chat-titles">
+          <h1 id="chat-name" class="chat-name"></h1>
+          <p id="chat-stats" class="chat-stats"></p>
+        </div>
+      </div>
+      <div class="chat-actions">
+        <button id="export-current" class="icon-button" type="button" aria-label="Download this friend" data-icon="download"></button>
+        <button id="delete-current" class="icon-button" type="button" aria-label="Delete this friend" data-icon="trash"></button>
+      </div>
+    </header>
+
+    <div id="scroller" class="scroller">
+      <div id="welcome" class="welcome" hidden>
+        <img class="wordmark big" alt="friend" width="144" height="48">
+        <p class="welcome-line">Your friend.com friend, on this device, with your own Gemini or OpenAI key. Nothing goes anywhere except the provider you pick.</p>
+        <div class="welcome-buttons">
+          <button id="welcome-import" class="primary-button" type="button"><span data-icon="upload"></span>Import your friend</button>
+          <button id="welcome-new" class="quiet-button" type="button"><span data-icon="plus"></span>Start a new one</button>
+        </div>
+        <details class="how">
+          <summary>Where do I get my friend file?</summary>
+          <p><b>In the friend.com app:</b> go back to your list of friends, tap the download button (the square with an arrow) at the top, then tap the friend you want. When the row says “&lt;name&gt; friend file”, tap <b>Download</b>.</p>
+          <p><b>On the website:</b> open your list of friends, click <b>Download a friend to a file</b> (the arrow icon) at the top, click the friend, then click <b>Download</b> when it’s ready.</p>
+          <p>You get <code>friend_&lt;name&gt;.zip</code>. Import it here as it is. A <code>.friendlocal</code> file from friend-local on another device imports the same way.</p>
+        </details>
+        <p id="welcome-key" class="welcome-key">You will need an API key: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Gemini</a> has a free tier. Paste it into <button class="link-button" type="button" data-open-settings>Settings</button>.</p>
+      </div>
+      <div id="earlier" class="earlier" hidden><button id="show-earlier" class="quiet-button small" type="button">Show earlier messages</button></div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <div id="typing" class="typing" hidden aria-label="Thinking"><span></span><span></span><span></span></div>
+    </div>
+
+    <div id="trouble" class="trouble" role="alert" hidden>
+      <span id="trouble-text"></span>
+      <button id="trouble-close" class="icon-button tiny" type="button" aria-label="Dismiss" data-icon="x"></button>
+    </div>
+
+    <form id="composer" class="composer" autocomplete="off">
+      <div id="attachments" class="attachments" hidden></div>
+      <div class="composer-row">
+        <button id="attach" class="icon-button round" type="button" aria-label="Add a photo" data-icon="image"></button>
+        <textarea id="text" class="composer-text" rows="1" enterkeyhint="send" autocapitalize="sentences" autocomplete="off" placeholder="Message"></textarea>
+        <button id="mic" class="icon-button round" type="button" aria-label="Talk" data-icon="mic"></button>
+        <button id="send" class="send" type="submit" aria-label="Send" data-icon="send"></button>
+      </div>
+      <div id="voice-bar" class="voice-bar" hidden>
+        <span id="voice-level" class="voice-level"><span></span></span>
+        <span id="voice-state" class="voice-state"></span>
+        <button id="voice-stop" class="quiet-button small" type="button">Stop talking</button>
+      </div>
+    </form>
+  </main>
+</div>
+
+<div id="drop" class="drop" hidden><div>Drop a friend file to import it</div></div>
+
+<dialog id="settings" class="sheet" aria-labelledby="settings-title">
+  <form method="dialog" id="settings-form" class="sheet-body">
+    <header class="sheet-head">
+      <h2 id="settings-title">Settings</h2>
+      <button class="icon-button" value="close" aria-label="Close" data-icon="x"></button>
+    </header>
+
+    <section class="group">
+      <h3>Provider</h3>
+      <div class="segmented" role="radiogroup" aria-label="Provider">
+        <label><input type="radio" name="provider" value="0"><span>Gemini</span></label>
+        <label><input type="radio" name="provider" value="1"><span>OpenAI-compatible</span></label>
+      </div>
+      <label class="field">
+        <span>API key</span>
+        <input id="key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="Paste your key">
+      </label>
+      <p class="hint" id="key-hint"></p>
+      <label class="switch"><input id="keep-key" type="checkbox"><span>Keep the key on this device</span></label>
+      <p class="hint">Off, it is forgotten when this tab closes. Either way it is only ever sent to the provider, in a header.</p>
+    </section>
+
+    <section class="group">
+      <h3>The friend</h3>
+      <label class="field"><span>It calls you</span><input id="user-name" type="text" autocomplete="given-name" placeholder="the user"></label>
+      <label class="switch"><input id="images" type="checkbox"><span>Photographs</span></label>
+      <p class="hint">Off and no picture is sent, kept or looked at.</p>
+      <label class="switch"><input id="voice" type="checkbox"><span>Talking</span></label>
+      <p class="hint">Tap the microphone and talk; it answers out loud when you stop.</p>
+      <label class="switch"><input id="speak-replies" type="checkbox"><span>Speak typed replies too</span></label>
+      <label class="field"><span>Voice</span><input id="voice-name" type="text" autocapitalize="off" spellcheck="false" placeholder="chosen from its name"></label>
+    </section>
+
+    <details class="group advanced">
+      <summary>Advanced</summary>
+      <label class="field"><span>Base URL</span><input id="base-url" type="url" autocapitalize="off" spellcheck="false" placeholder="the provider's own"></label>
+      <div id="models"></div>
+    </details>
+
+    <section class="group">
+      <h3>This browser</h3>
+      <p class="hint" id="storage-status"></p>
+      <p class="hint">Your friends live in this browser's storage on this device. Download them now and then to keep a copy; the file opens in friend-local anywhere.</p>
+      <p class="hint version" id="version"></p>
+    </section>
+  </form>
+</dialog>
+
+<dialog id="ask" class="sheet small" aria-labelledby="ask-title">
+  <form method="dialog" class="sheet-body" id="ask-form">
+    <h2 id="ask-title"></h2>
+    <p id="ask-text" class="hint"></p>
+    <input id="ask-input" type="text" autocomplete="off" hidden>
+    <div class="ask-buttons">
+      <button value="cancel" class="quiet-button" formnovalidate>Cancel</button>
+      <button value="ok" id="ask-ok" class="primary-button">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="viewer" class="viewer" aria-label="Photo">
+  <form method="dialog"><button class="icon-button viewer-close" value="close" aria-label="Close" data-icon="x"></button></form>
+  <img id="viewer-img" alt="">
+  <p id="viewer-caption"></p>
+</dialog>
+
+<input id="import-input" type="file" hidden>
+<input id="photo-input" type="file" accept="image/*" multiple hidden>
+
+<script type="text/plain" id="friend-wordmark">@@WORDMARK@@</script>
+<script type="text/plain" id="friend-wasm">@@WASM@@</script>
+<script>
+@@JS@@
+</script>
+</body>
+</html>
